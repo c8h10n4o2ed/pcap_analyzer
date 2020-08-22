@@ -1,0 +1,45 @@
+syntax = "proto2";
+package pcap_analyzer;
+
+message ConnectionNotify {
+    required string hash = 1;
+    required uint64 timestamp_s = 2;
+    required uint64 timestamp_us = 3;
+    required uint32 protocol = 4;
+    required string src = 5;
+    required string dst = 6;
+    required uint32 l4_protocol = 7;
+    required uint32 l4_src = 8;
+    required uint32 l4_dst = 9;
+    required uint32 msgtype = 10;
+    required uint32 seqnum = 11;
+}
+
+message ConnectionCloseNotify {
+    required string hash = 1;
+    required uint64 timestamp_s = 2;
+    required uint64 timestamp_us = 3;
+}
+
+/*
+message DNSRequest {
+    required string hash = 1;
+    required string dst = 2;
+    required string record = 3;
+}
+
+message DNSResponse {
+    required string hash = 1;
+    required string record = 2;
+}
+*/
+
+message GenericMessage {
+    enum MsgType {
+        CONNECTION_NOTIFY = 1;
+        CONNECTION_CLOSE_NOTIFY = 2;
+        SYNC = 3;
+    }
+    required MsgType msgtype = 1;
+    required bytes data = 2;
+}
